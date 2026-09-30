@@ -1,51 +1,120 @@
 /* ============================================================
    ARAÇA BEACH — BIO SITE
    Azul como estrutura, lima como energia, branco como respiro.
+   Mobile-first: tudo dimensionado pela altura da tela (dvh) para
+   encaixar em uma tela só, sem mexer para os lados.
    ============================================================ */
 
+/* ---------- Fonte hospedada no próprio site (sem Google Fonts) ---------- */
+@font-face { font-family: "Poppins"; font-style: normal; font-weight: 500; font-display: swap; src: url("fonts/poppins-500.woff2") format("woff2"); }
+@font-face { font-family: "Poppins"; font-style: normal; font-weight: 700; font-display: swap; src: url("fonts/poppins-700.woff2") format("woff2"); }
+@font-face { font-family: "Poppins"; font-style: normal; font-weight: 800; font-display: swap; src: url("fonts/poppins-800.woff2") format("woff2"); }
+
 :root {
-  --azul: #061268;          /* Azul Araça */
+  --azul: #061268;          /* Azul Araça (marca) */
+  --fundo: #050e58;         /* fundo da página: um tom mais escuro que o Azul Araça */
   --lima: #b7e90c;          /* Lima Energia */
   --movimento: #4b58be;     /* Azul Movimento */
   --branco: #ffffff;
-  --borda-vidro: rgba(124, 142, 255, 0.78);
-  --strip-h: 56px;
+
+  /* Escala mobile, calculada pela altura útil da tela */
+  --strip-h: clamp(42px, 6dvh, 54px);
+  --gap: clamp(6px, 1.25dvh, 11px);
+  --btn-h: clamp(46px, 7.1dvh, 62px);
+  --btn-h-primary: clamp(58px, 9.2dvh, 78px);
+  --icon: clamp(30px, 4.9dvh, 42px);
+  --icon-primary: clamp(38px, 5.6dvh, 46px);
+  --arrow: clamp(24px, 3.8dvh, 32px);
+  --arrow-primary: clamp(28px, 4.2dvh, 34px);
+  --t: 15px;   --s: 11.5px;       /* título / subtítulo dos botões */
+  --tp: 15px;  --sp: 11.5px;      /* botão principal */
+  --side: max(28px, env(safe-area-inset-left), env(safe-area-inset-right));
+
   /* Grão fosco do vidro (ruído cinza gerado por SVG, sem arquivo externo) */
   --grao: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0.9 0 0 0 0.05  0.9 0 0 0 0.05  0.9 0 0 0 0.05  0 0 0 0 1'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
 }
 
+/* Navegadores sem dvh usam vh */
+@supports not (height: 100dvh) {
+  :root {
+    --strip-h: clamp(42px, 6vh, 54px);
+    --gap: clamp(6px, 1.25vh, 11px);
+    --btn-h: clamp(46px, 7.1vh, 62px);
+    --btn-h-primary: clamp(58px, 9.2vh, 78px);
+    --icon: clamp(30px, 4.9vh, 42px);
+    --icon-primary: clamp(38px, 5.6vh, 46px);
+    --arrow: clamp(24px, 3.8vh, 32px);
+    --arrow-primary: clamp(28px, 4.2vh, 34px);
+  }
+}
+
 *, *::before, *::after { box-sizing: border-box; }
 
-html { background: var(--azul); -webkit-text-size-adjust: 100%; }
+/* TRAVA LATERAL: a página nunca anda para esquerda/direita; só rola na vertical */
+html {
+  background: var(--fundo);
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  overflow-x: hidden;
+  overflow-x: clip;
+  overscroll-behavior-x: none;
+  touch-action: pan-y pinch-zoom;
+}
 
 body {
   margin: 0;
+  width: 100%;
+  max-width: 100%;
   min-height: 100vh;
   min-height: 100dvh;
+  overflow-x: hidden;
+  overflow-x: clip;
+  overscroll-behavior-x: none;
+  touch-action: pan-y pinch-zoom;
   color: var(--branco);
   font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   -webkit-font-smoothing: antialiased;
   -webkit-tap-highlight-color: transparent;
 }
 
-/* ---------- Fundo: foto da fachada sob overlay azul ---------- */
+.sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
+
+/* ---------- Fundo: foto da fachada sob overlay azul escuro ---------- */
 .bg {
   position: fixed;
   inset: 0;
   z-index: -1;
-  background: var(--azul) url("assets/bg-desktop.webp") 18% 40% / cover no-repeat;
+  overflow: hidden;
+  background: var(--fundo) url("assets/bg-desktop.webp") 12% 130% / auto 140% no-repeat;
 }
-.bg::after {
+/* camada 1: escurece a foto e dissolve em azul sólido */
+.bg::before {
   content: "";
   position: absolute;
   inset: 0;
   background: linear-gradient(
     180deg,
-    rgba(6, 18, 104, 0.62) 0%,
-    rgba(6, 18, 104, 0.80) 28%,
-    rgba(6, 18, 104, 0.96) 52%,
-    var(--azul) 70%,
-    var(--azul) 100%
+    rgba(4, 10, 72, 0.72) 0%,
+    rgba(4, 10, 72, 0.84) 30%,
+    rgba(4, 10, 72, 0.96) 56%,
+    var(--fundo) 76%,
+    var(--fundo) 100%
+  );
+}
+/* camada 2: degradê escuro que vem de cima e fica ATRÁS do pattern superior */
+.bg::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: calc(var(--strip-h) + 150px);
+  background: linear-gradient(
+    180deg,
+    #020532 0%,
+    rgba(2, 5, 50, 0.97) 34%,
+    rgba(3, 8, 62, 0.74) 66%,
+    rgba(4, 10, 72, 0) 100%
   );
 }
 
@@ -63,8 +132,7 @@ body {
   background: url("assets/pattern-strip.png") center / auto 100% repeat-x;
   opacity: 0.95;
 }
-
-/* Pattern superior: sombra azul-escura nos ícones + faixa de sombra abaixo, para contraste com a foto */
+/* Pattern superior: por cima do degradê escuro, com sombra sutil nos ícones */
 .strip--top {
   position: relative;
   z-index: 1;
@@ -76,19 +144,13 @@ body {
   position: absolute;
   inset: 0;
   background: url("assets/pattern-strip.png") center / auto 100% repeat-x;
-  filter:
-    drop-shadow(0 2px 2px rgba(2, 6, 60, 0.90))
-    drop-shadow(0 5px 12px rgba(3, 9, 72, 0.90));
+  filter: drop-shadow(0 2px 3px rgba(2, 5, 50, 0.85));
 }
-.strip--top::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 100%;
-  height: 46px;
-  background: linear-gradient(180deg, rgba(3, 9, 72, 0.70) 0%, rgba(3, 9, 72, 0) 100%);
-  pointer-events: none;
+/* Pattern inferior: respeita a área segura do iPhone (barra home) */
+.strip--bottom {
+  height: calc(var(--strip-h) + env(safe-area-inset-bottom));
+  background-position: center top;
+  background-size: auto var(--strip-h);
 }
 
 .content {
@@ -96,7 +158,7 @@ body {
   width: 100%;
   max-width: 500px;
   margin: 0 auto;
-  padding: 26px 20px 30px;
+  padding: clamp(8px, 1.8dvh, 20px) var(--side) clamp(8px, 1.8dvh, 20px);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -108,42 +170,51 @@ body {
   flex-direction: column;
   align-items: center;
   text-align: center;
-  margin-bottom: 26px;
+  margin-bottom: clamp(10px, 2.4dvh, 22px);
   position: relative;
   isolation: isolate;
 }
-/* Halo azul-escuro atrás da logo para contraste sobre a foto */
+/* Halo azul-escuro atrás da logo (nunca passa das bordas da tela) */
 .brand::before {
   content: "";
   position: absolute;
   z-index: -1;
-  left: 50%;
-  top: -6px;
-  width: 135%;
-  height: 150px;
-  transform: translateX(-50%);
-  background: radial-gradient(closest-side, rgba(3, 9, 72, 0.96) 0%, rgba(4, 12, 90, 0.78) 55%, rgba(6, 18, 104, 0) 100%);
+  left: -20px;
+  right: -20px;
+  top: -8px;
+  height: 120px;
+  background: radial-gradient(closest-side, rgba(2, 6, 56, 0.96) 0%, rgba(3, 9, 70, 0.74) 58%, rgba(4, 10, 72, 0) 100%);
   pointer-events: none;
 }
 .brand__logo {
   display: block;
-  width: min(72%, 300px);
+  width: min(58%, 220px);
   height: auto;
   filter:
-    drop-shadow(0 2px 2px rgba(2, 6, 60, 0.90))
-    drop-shadow(0 6px 16px rgba(3, 9, 72, 0.95))
-    drop-shadow(0 0 34px rgba(6, 18, 104, 0.95));
+    drop-shadow(0 2px 2px rgba(2, 5, 50, 0.90))
+    drop-shadow(0 6px 14px rgba(3, 9, 70, 0.95))
+    drop-shadow(0 0 30px rgba(6, 18, 104, 0.95));
 }
-.brand__tagline {
-  margin: 18px 0 0;
-  max-width: 19em;
-  font-size: clamp(17px, 4.7vw, 21px);
-  line-height: 1.32;
-  font-weight: 600;
+/* HEAD */
+.brand__title {
+  margin: clamp(8px, 1.6dvh, 14px) 0 0;
+  max-width: 16em;
+  font-size: clamp(18px, 5.4vw, 22px);
+  line-height: 1.18;
+  font-weight: 700;
+  letter-spacing: -0.01em;
   text-wrap: balance;
-  text-shadow: 0 2px 14px rgba(6, 18, 104, 0.85);
+  text-shadow: 0 2px 12px rgba(2, 5, 50, 0.9);
 }
-.brand__tagline span { font-weight: 500; color: #cdd3ff; }
+/* SUBHEADLINE */
+.brand__sub {
+  margin: 4px 0 0;
+  font-size: clamp(12px, 3.5vw, 14px);
+  line-height: 1.3;
+  font-weight: 500;
+  color: #c9d0ff;
+  text-shadow: 0 2px 10px rgba(2, 5, 50, 0.9);
+}
 
 /* ---------- Botões ---------- */
 .links {
@@ -152,7 +223,7 @@ body {
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: var(--gap);
 }
 
 .btn {
@@ -161,13 +232,14 @@ body {
   display: grid;
   grid-template-columns: auto 1fr auto;
   align-items: center;
-  gap: 14px;
-  min-height: 84px;
-  padding: 10px 14px 10px 12px;
+  gap: 10px;
+  min-height: var(--btn-h);
+  padding: 6px 10px 6px 8px;
   border-radius: 999px;
   color: var(--branco);
   text-decoration: none;
   isolation: isolate;
+  touch-action: manipulation;
   transition: transform 0.18s ease, box-shadow 0.2s ease, filter 0.2s ease;
 
   /* LIQUID GLASS: camadas (de cima para baixo)
@@ -186,9 +258,9 @@ body {
   box-shadow:
     inset 0 1.5px 1px rgba(255, 255, 255, 0.60),      /* aresta de luz no topo */
     inset 0 -2px 5px rgba(150, 172, 255, 0.40),       /* luz de rebote embaixo */
-    inset 0 0 24px rgba(120, 140, 255, 0.20),         /* brilho interno */
-    0 14px 30px rgba(2, 6, 50, 0.50),
-    0 2px 6px rgba(2, 6, 50, 0.40);
+    inset 0 0 20px rgba(120, 140, 255, 0.20),         /* brilho interno */
+    0 8px 18px rgba(2, 5, 44, 0.50),
+    0 2px 5px rgba(2, 5, 44, 0.40);
   -webkit-backdrop-filter: blur(12px) saturate(1.8) brightness(1.12);
   backdrop-filter: blur(12px) saturate(1.8) brightness(1.12);
 }
@@ -200,7 +272,7 @@ body {
   inset: 0;
   z-index: 3;
   border-radius: inherit;
-  padding: 2px;
+  padding: 1.5px;
   background: linear-gradient(155deg,
     rgba(255, 255, 255, 0.95) 0%,
     rgba(255, 255, 255, 0.18) 26%,
@@ -232,56 +304,56 @@ body {
 
 .btn:focus-visible {
   outline: 3px solid var(--lima);
-  outline-offset: 3px;
+  outline-offset: 2px;
 }
 
 .btn__icon {
-  width: 60px;
-  height: 60px;
+  width: var(--icon);
+  height: var(--icon);
   border-radius: 50%;
   background: radial-gradient(90% 90% at 30% 10%, #ffffff 0%, #eef1ff 100%);
   display: grid;
   place-items: center;
-  box-shadow: inset 0 -3px 6px rgba(120, 140, 255, 0.35), 0 4px 12px rgba(0, 0, 40, 0.40);
+  box-shadow: inset 0 -2px 4px rgba(120, 140, 255, 0.35), 0 3px 8px rgba(0, 0, 40, 0.40);
 }
-.btn__icon svg { width: 36px; height: 36px; display: block; }
+.btn__icon svg { width: 62%; height: 62%; display: block; }
 
-.btn__text { min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.btn__text { min-width: 0; display: flex; flex-direction: column; gap: 1px; }
 .btn__title {
-  font-size: 19px;
+  font-size: var(--t);
   font-weight: 700;
   line-height: 1.15;
   letter-spacing: -0.005em;
 }
 .btn__sub {
-  font-size: 13.5px;
-  font-weight: 400;
-  line-height: 1.3;
+  font-size: var(--s);
+  font-weight: 500;
+  line-height: 1.25;
   color: rgba(255, 255, 255, 0.78);
 }
 
 .btn__arrow {
-  width: 44px;
-  height: 44px;
+  width: var(--arrow);
+  height: var(--arrow);
   border-radius: 50%;
   display: grid;
   place-items: center;
   background:
     radial-gradient(100% 100% at 30% 0%, rgba(255, 255, 255, 0.28) 0%, rgba(255, 255, 255, 0) 55%),
-    rgba(4, 12, 86, 0.92);
+    rgba(3, 9, 70, 0.92);
   border: 1.5px solid rgba(150, 170, 255, 0.60);
-  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.35), 0 2px 6px rgba(0, 0, 40, 0.35);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.35), 0 2px 5px rgba(0, 0, 40, 0.35);
   transition: transform 0.2s ease;
 }
-.btn__arrow svg { width: 22px; height: 22px; display: block; }
+.btn__arrow svg { width: 56%; height: 56%; display: block; }
 
 .btn__soon {
   display: none;
-  padding: 6px 12px;
+  padding: 4px 10px;
   border-radius: 999px;
   background: var(--lima);
   color: var(--azul);
-  font-size: 12px;
+  font-size: 10.5px;
   font-weight: 700;
   white-space: nowrap;
 }
@@ -294,8 +366,9 @@ body {
 
 /* ---------- Botão principal: avaliação no Google ---------- */
 .btn--primary {
-  min-height: 108px;
-  padding: 12px 16px 12px 14px;
+  min-height: var(--btn-h-primary);
+  padding: 8px 12px 8px 10px;
+  gap: 12px;
   color: var(--azul);
   --my: -12%;
   background:
@@ -308,25 +381,23 @@ body {
   box-shadow:
     inset 0 2px 1px rgba(255, 255, 255, 0.85),
     inset 0 -3px 6px rgba(120, 170, 0, 0.55),
-    inset 0 0 26px rgba(255, 255, 200, 0.35),
-    0 0 34px rgba(183, 233, 12, 0.42),
-    0 14px 30px rgba(0, 0, 40, 0.50);
+    inset 0 0 22px rgba(255, 255, 200, 0.35),
+    0 0 26px rgba(183, 233, 12, 0.40),
+    0 10px 22px rgba(0, 0, 40, 0.50);
   -webkit-backdrop-filter: none;
   backdrop-filter: none;
   animation: glow 3.2s ease-in-out infinite;
 }
-.btn--primary .btn__icon { width: 68px; height: 68px; }
-.btn--primary .btn__icon svg { width: 42px; height: 42px; }
-.btn--primary .btn__title { font-size: 20px; font-weight: 800; text-wrap: balance; }
-.btn--primary .btn__sub { font-size: 13.5px; font-weight: 500; color: rgba(6, 18, 104, 0.82); text-wrap: balance; }
+.btn--primary .btn__icon { width: var(--icon-primary); height: var(--icon-primary); }
+.btn--primary .btn__title { font-size: var(--tp); font-weight: 800; text-wrap: balance; }
+.btn--primary .btn__sub { font-size: var(--sp); font-weight: 500; color: rgba(6, 18, 104, 0.82); text-wrap: balance; }
 .btn--primary .btn__arrow {
-  width: 46px;
-  height: 46px;
+  width: var(--arrow-primary);
+  height: var(--arrow-primary);
   background: var(--azul);
   border-color: rgba(6, 18, 104, 0.35);
   animation: nudge 1.8s ease-in-out infinite;
 }
-.btn--primary .btn__arrow svg { width: 24px; height: 24px; }
 .btn--primary::before {          /* sweep do principal: mais forte e mais frequente */
   background: linear-gradient(105deg,
     transparent 36%,
@@ -350,12 +421,12 @@ body {
   82%, 100% { transform: translateX(130%); }
 }
 @keyframes glow {
-  0%, 100% { box-shadow: inset 0 2px 1px rgba(255,255,255,.85), inset 0 -3px 6px rgba(120,170,0,.55), inset 0 0 26px rgba(255,255,200,.35), 0 0 28px rgba(183,233,12,.36), 0 14px 30px rgba(0,0,40,.50); }
-  50%      { box-shadow: inset 0 2px 1px rgba(255,255,255,.85), inset 0 -3px 6px rgba(120,170,0,.55), inset 0 0 26px rgba(255,255,200,.35), 0 0 46px rgba(183,233,12,.60), 0 14px 30px rgba(0,0,40,.50); }
+  0%, 100% { box-shadow: inset 0 2px 1px rgba(255,255,255,.85), inset 0 -3px 6px rgba(120,170,0,.55), inset 0 0 22px rgba(255,255,200,.35), 0 0 22px rgba(183,233,12,.34), 0 10px 22px rgba(0,0,40,.50); }
+  50%      { box-shadow: inset 0 2px 1px rgba(255,255,255,.85), inset 0 -3px 6px rgba(120,170,0,.55), inset 0 0 22px rgba(255,255,200,.35), 0 0 36px rgba(183,233,12,.58), 0 10px 22px rgba(0,0,40,.50); }
 }
 @keyframes nudge {
   0%, 100% { transform: translateX(0); }
-  50% { transform: translateX(4px); }
+  50% { transform: translateX(3px); }
 }
 
 /* ---------- Estado "Em breve" (link ausente) ---------- */
@@ -374,74 +445,114 @@ body {
 
 /* ---------- Rodapé ---------- */
 .footer {
-  margin-top: 28px;
-  padding-top: 20px;
+  margin-top: clamp(10px, 2.4dvh, 22px);
+  padding-top: clamp(8px, 1.8dvh, 16px);
   border-top: 1px solid rgba(124, 142, 255, 0.35);
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  gap: 10px;
+  gap: 6px;
 }
-.footer__logo { width: 150px; height: auto; display: block; }
-.footer__copy { margin: 0; font-size: 13px; font-weight: 500; color: rgba(255, 255, 255, 0.92); }
-.footer__loc { margin: -4px 0 0; font-size: 12px; color: rgba(255, 255, 255, 0.6); }
+.footer__logo { width: 104px; height: auto; display: block; }
+.footer__copy { margin: 0; font-size: 11px; font-weight: 500; line-height: 1.3; color: rgba(255, 255, 255, 0.92); }
+.footer__loc { margin: -2px 0 0; font-size: 10.5px; line-height: 1.3; color: rgba(255, 255, 255, 0.6); }
 
-/* ---------- Entrada suave ---------- */
+/* ---------- Entrada suave (atraso escalonado por classe) ---------- */
+.d0 { --i: 0; } .d1 { --i: 1; } .d2 { --i: 2; } .d3 { --i: 3; } .d4 { --i: 4; }
+.d5 { --i: 5; } .d6 { --i: 6; } .d7 { --i: 7; } .d8 { --i: 8; }
 .reveal {
   opacity: 0;
   animation: rise 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
   animation-delay: calc(var(--i, 0) * 70ms + 60ms);
 }
 @keyframes rise {
-  from { opacity: 0; transform: translateY(14px); }
+  from { opacity: 0; transform: translateY(12px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 
-/* ---------- Mobile: foto como faixa no topo, dissolvendo em azul ---------- */
+/* ---------- Mobile: a foto vira uma faixa no topo, dissolvendo em azul ---------- */
 @media (max-width: 767px) {
   .bg {
     position: absolute;
     inset: 0 0 auto 0;
     height: calc(100vw * 0.92);
-    background: var(--azul) url("assets/bg-mobile.webp") 0% 0 / cover no-repeat;
+    background: var(--fundo) url("assets/bg-mobile.webp") 0% 0 / cover no-repeat;
+    /* dissolve o fim da faixa da foto no fundo, sem deixar borda */
+    -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 70%, transparent 100%);
+    mask-image: linear-gradient(180deg, #000 0%, #000 70%, transparent 100%);
   }
-  .bg::after {
+  .bg::before {
     background: linear-gradient(
       180deg,
-      rgba(6, 18, 104, 0.58) 0%,
-      rgba(6, 18, 104, 0.74) 45%,
-      rgba(6, 18, 104, 0.94) 80%,
-      var(--azul) 100%
+      rgba(4, 10, 72, 0.62) 0%,
+      rgba(4, 10, 72, 0.76) 45%,
+      rgba(4, 10, 72, 0.95) 80%,
+      var(--fundo) 100%
     );
   }
 }
 
+/* ---------- Tablet / desktop: botões um pouco maiores ---------- */
 @media (min-width: 768px) {
-  :root { --strip-h: 64px; }
-  /* Desktop/tablet: fachada ampliada e subida para ficar ao lado da logo */
-  .bg { background-size: auto 140%; background-position: 12% 130%; }
-  .bg::after {
-    background: linear-gradient(
-      180deg,
-      rgba(6, 18, 104, 0.55) 0%,
-      rgba(6, 18, 104, 0.72) 34%,
-      rgba(6, 18, 104, 0.94) 62%,
-      var(--azul) 80%,
-      var(--azul) 100%
-    );
+  :root {
+    --strip-h: 64px;
+    --gap: 12px;
+    --btn-h: 72px;
+    --btn-h-primary: 92px;
+    --icon: 52px;
+    --icon-primary: 62px;
+    --arrow: 38px;
+    --arrow-primary: 44px;
+    --t: 17px;   --s: 13px;
+    --tp: 19px;  --sp: 13.5px;
   }
-  .content { padding-top: 34px; padding-bottom: 40px; }
+  .content { max-width: 480px; padding-top: 30px; padding-bottom: 34px; }
+  .brand__logo { width: min(72%, 300px); }
+  .brand__title { font-size: 24px; }
+  .brand__sub { font-size: 15px; }
+  .btn { gap: 14px; padding: 8px 14px 8px 10px; }
+  .btn--primary { padding: 10px 16px 10px 12px; }
+  .footer__logo { width: 140px; }
+  .footer__copy { font-size: 13px; }
+  .footer__loc { font-size: 12px; }
 }
 
-@media (max-width: 360px) {
-  .btn__icon { width: 52px; height: 52px; }
-  .btn__icon svg { width: 32px; height: 32px; }
-  .btn__title { font-size: 17px; }
-  .btn__sub { font-size: 12.5px; }
-  .btn--primary .btn__title { font-size: 19px; }
-  .btn--primary .btn__icon { width: 62px; height: 62px; }
-  .btn--primary .btn__icon svg { width: 40px; height: 40px; }
+/* ---------- Telas baixas (iPhone SE, Android compacto): tudo encaixa sem rolar ---------- */
+@media (max-height: 700px) and (max-width: 767px) {
+  .brand__title { font-size: 17px; max-width: none; }
+  .brand__sub { font-size: 12px; }
+  .footer { gap: 4px; }
+  .footer__logo { width: 88px; }
+  .footer__loc { display: none; }
+}
+
+/* ---------- Telas bem baixas (360x640 e menores) ---------- */
+@media (max-height: 660px) and (max-width: 767px) {
+  :root {
+    --strip-h: 36px;
+    --gap: 5px;
+    --btn-h: 44px;
+    --btn-h-primary: 56px;
+    --icon: 28px;
+    --icon-primary: 36px;
+    --arrow: 22px;
+    --arrow-primary: 26px;
+  }
+  .brand { margin-bottom: 8px; }
+  .brand__logo { width: min(50%, 190px); }
+  .brand__title { font-size: 16px; }
+  .brand__sub { font-size: 11.5px; }
+  .footer { margin-top: 8px; padding-top: 6px; }
+}
+@media (max-height: 600px) and (max-width: 767px) {
+  .footer__logo { display: none; }
+  .btn__sub { font-size: 10.5px; }
+}
+
+/* ---------- Telas muito estreitas ---------- */
+@media (max-width: 340px) {
+  :root { --t: 14px; --s: 10.5px; --tp: 15px; --sp: 11px; }
 }
 
 /* ---------- Movimento reduzido ---------- */
@@ -449,6 +560,6 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .reveal { animation: none; opacity: 1; }
   .btn--primary, .btn--primary .btn__arrow { animation: none; }
-  .btn--primary { box-shadow: inset 0 2px 1px rgba(255,255,255,.85), inset 0 -3px 6px rgba(120,170,0,.55), inset 0 0 26px rgba(255,255,200,.35), 0 0 36px rgba(183,233,12,.48), 0 14px 30px rgba(0,0,40,.50); }
+  .btn--primary { box-shadow: inset 0 2px 1px rgba(255,255,255,.85), inset 0 -3px 6px rgba(120,170,0,.55), inset 0 0 22px rgba(255,255,200,.35), 0 0 30px rgba(183,233,12,.48), 0 10px 22px rgba(0,0,40,.50); }
   .btn { transition: none; }
 }

@@ -4,34 +4,38 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Araça Beach | Links</title>
-  <meta name="description" content="Seu ponto de encontro com o esporte, lazer e bons momentos no Araça">
-  <meta name="theme-color" content="#061268">
+  <meta name="description" content="Seu ponto de encontro com o esporte. Lazer e bons momentos no Araça.">
+  <meta name="theme-color" content="#030838">
+  <meta name="referrer" content="strict-origin-when-cross-origin">
+  <meta name="format-detection" content="telephone=no">
 
-  <!-- Compartilhamento. Depois de publicar, troque "assets/og-image.jpg" pela URL completa (https://seudominio/assets/og-image.jpg). -->
+  <!-- Compartilhamento -->
   <meta property="og:type" content="website">
   <meta property="og:locale" content="pt_BR">
   <meta property="og:site_name" content="Araça Beach">
   <meta property="og:title" content="Araça Beach | Links">
-  <meta property="og:description" content="Seu ponto de encontro com o esporte, lazer e bons momentos no Araça">
+  <meta property="og:description" content="Seu ponto de encontro com o esporte. Lazer e bons momentos no Araça.">
   <meta property="og:image" content="https://aracabeach-links.vercel.app/assets/og-image.jpg">
   <meta name="twitter:card" content="summary_large_image">
 
   <link rel="icon" type="image/png" href="assets/favicon.png">
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- Carregamento rápido: só o que aparece primeiro -->
+  <link rel="preload" href="fonts/poppins-700.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/logo.png" as="image">
+  <link rel="preload" href="assets/bg-mobile.webp" as="image" media="(max-width: 767px)">
+  <link rel="preload" href="assets/bg-desktop.webp" as="image" media="(min-width: 768px)">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <div class="bg" aria-hidden="true"></div>
 
   <!-- Símbolos reutilizados -->
-  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <svg class="sprite" width="0" height="0" aria-hidden="true" focusable="false">
     <defs>
       <symbol id="i-arrow" viewBox="0 0 24 24">
-        <path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="#b7e90c" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M5 12h14M13 6l6 6-6 6" fill="none" stroke="#b7e90c" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"/>
       </symbol>
     </defs>
   </svg>
@@ -41,14 +45,15 @@
 
     <main class="content">
       <header class="brand">
-        <img class="brand__logo reveal" style="--i:0" src="assets/logo.png" width="784" height="209" alt="Araça Beach" fetchpriority="high">
-        <p class="brand__tagline reveal" style="--i:1">Seu ponto de encontro com o esporte<span>, lazer e bons momentos no Araça</span></p>
+        <img class="brand__logo reveal d0" src="assets/logo.png" width="784" height="209" alt="Araça Beach" fetchpriority="high" decoding="async">
+        <h1 class="brand__title reveal d1">Seu ponto de encontro com o esporte</h1>
+        <p class="brand__sub reveal d1">Lazer e bons momentos no Araça.</p>
       </header>
 
       <ul class="links">
 
         <!-- 1. Principal: avaliação no Google -->
-        <li class="reveal" style="--i:2">
+        <li class="reveal d2">
           <a class="btn btn--primary" data-link="avaliar" target="_blank" rel="noopener noreferrer" aria-label="Avalie o Araça no Google">
             <span class="btn__icon" aria-hidden="true">
               <svg viewBox="0 0 24 24"><path d="M12 2.6l2.9 6 6.6.9-4.8 4.6 1.2 6.5L12 17.4l-5.9 3.2 1.2-6.5L2.5 9.5l6.6-.9z" fill="#fbbc04" stroke="#fbbc04" stroke-width="1.4" stroke-linejoin="round"/></svg>
@@ -62,10 +67,10 @@
         </li>
 
         <!-- 2. Agende seu horário -->
-        <li class="reveal" style="--i:3">
+        <li class="reveal d3">
           <a class="btn" data-link="agendar" target="_blank" rel="noopener noreferrer" aria-label="Agende seu horário pelo WhatsApp">
             <span class="btn__icon" aria-hidden="true">
-              <svg viewBox="0 0 32 32" fill="none" stroke="#061268" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+              <svg viewBox="0 0 32 32" fill="none" stroke="#061268" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M9 3.5v5M21 3.5v5M4 12.5h22"/>
                 <path d="M13.5 26H8.5A4.5 4.5 0 0 1 4 21.5v-11A4.5 4.5 0 0 1 8.5 6h13A4.5 4.5 0 0 1 26 10.5V14"/>
                 <circle cx="22.5" cy="22.5" r="6"/>
@@ -81,7 +86,7 @@
         </li>
 
         <!-- 3. Fale com a nossa equipe -->
-        <li class="reveal" style="--i:4">
+        <li class="reveal d4">
           <a class="btn" data-link="equipe" target="_blank" rel="noopener noreferrer" aria-label="Fale com a nossa equipe pelo WhatsApp">
             <span class="btn__icon" aria-hidden="true">
               <svg viewBox="0 0 24 24">
@@ -98,17 +103,17 @@
         </li>
 
         <!-- 4. Cardápio digital (link ainda ausente → "Em breve") -->
-        <li class="reveal" style="--i:5">
+        <li class="reveal d5">
           <a class="btn is-soon" data-link="cardapio" target="_blank" rel="noopener noreferrer" aria-label="Cardápio digital" aria-disabled="true">
             <span class="btn__icon" aria-hidden="true">
-              <svg viewBox="0 0 32 32" fill="none" stroke="#061268" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round">
+              <svg viewBox="0 0 32 32" fill="none" stroke="#061268" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M9 4v7.5a3 3 0 0 0 6 0V4M12 4v24"/>
                 <path d="M23.5 4C21 6 20 9 20 13.5c0 2 1.2 3 3.5 3V28"/>
               </svg>
             </span>
             <span class="btn__text">
               <span class="btn__title">Cardápio digital</span>
-              <span class="btn__sub">Confira as delícias do nosso bar.</span>
+              <span class="btn__sub">Confira as delícias do bar.</span>
             </span>
             <span class="btn__arrow" aria-hidden="true"><svg><use href="#i-arrow"/></svg></span>
             <span class="btn__soon">Em breve</span>
@@ -116,7 +121,7 @@
         </li>
 
         <!-- 5. Instagram -->
-        <li class="reveal" style="--i:6">
+        <li class="reveal d6">
           <a class="btn" data-link="instagram" target="_blank" rel="noopener noreferrer" aria-label="Siga o Araça Beach no Instagram">
             <span class="btn__icon" aria-hidden="true">
               <svg viewBox="0 0 24 24">
@@ -144,7 +149,7 @@
         </li>
 
         <!-- 6. Como chegar -->
-        <li class="reveal" style="--i:7">
+        <li class="reveal d7">
           <a class="btn" data-link="maps" target="_blank" rel="noopener noreferrer" aria-label="Veja como chegar no Google Maps">
             <span class="btn__icon" aria-hidden="true">
               <svg viewBox="0 0 24 24">
@@ -169,17 +174,17 @@
         </li>
       </ul>
 
-      <footer class="footer reveal" style="--i:8">
-        <img class="footer__logo" src="assets/logo.png" width="784" height="209" alt="Araça Beach" loading="lazy">
+      <footer class="footer reveal d8">
+        <img class="footer__logo" src="assets/logo.png" width="784" height="209" alt="Araça Beach" loading="lazy" decoding="async">
         <p class="footer__copy">&copy; 2026 Araça Beach. Todos os direitos reservados.</p>
         <p class="footer__loc">Araçagy &bull; São José de Ribamar / MA</p>
       </footer>
     </main>
 
-    <div class="strip" aria-hidden="true"></div>
+    <div class="strip strip--bottom" aria-hidden="true"></div>
   </div>
 
-  <script src="config.js"></script>
-  <script src="script.js"></script>
+  <script src="config.js" defer></script>
+  <script src="script.js" defer></script>
 </body>
 </html>
