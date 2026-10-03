@@ -21,5 +21,6 @@ window.ARACA_CONFIG = {
   mensagens: {
     agendar: "Olá! Gostaria de agendar um horário de quadra no Araça Beach.",
     equipe:  "Olá! Vim pelo Instagram e gostaria de falar com a equipe do Araça Beach.",
+    matricula: "Olá! Gostaria de fazer minha matrícula no Araça Beach.",
   },
 };

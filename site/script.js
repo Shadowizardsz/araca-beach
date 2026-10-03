@@ -26,6 +26,7 @@
   var urls = {
     avaliar: safeUrl(links.avaliar),
     agendar: wa(msgs.agendar),
+    matricula: wa(msgs.matricula),
     equipe: wa(msgs.equipe),
     cardapio: safeUrl(links.cardapio),
     instagram: safeUrl(links.instagram),
