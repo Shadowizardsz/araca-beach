@@ -30,6 +30,7 @@
     equipe: wa(msgs.equipe),
     cardapio: safeUrl(links.cardapio),
     instagram: safeUrl(links.instagram),
+    inauguracao: safeUrl(links.inauguracao),
     maps: safeUrl(links.maps),
   };
 

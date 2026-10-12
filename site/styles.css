@@ -20,8 +20,8 @@
   /* Escala mobile, calculada pela altura útil da tela */
   --strip-h: clamp(42px, 6dvh, 54px);
   --gap: clamp(6px, 1.1dvh, 10px);
-  --btn-h: clamp(44px, 6.1dvh, 58px);
-  --btn-h-primary: clamp(56px, 8.1dvh, 74px);
+  --btn-h: clamp(44px, 5.7dvh, 58px);
+  --btn-h-primary: clamp(56px, 7.8dvh, 74px);
   --icon: clamp(28px, 4.4dvh, 40px);
   --icon-primary: clamp(36px, 5.4dvh, 44px);
   --arrow: clamp(22px, 3.5dvh, 30px);
@@ -39,8 +39,8 @@
   :root {
     --strip-h: clamp(42px, 6vh, 54px);
     --gap: clamp(6px, 1.1vh, 10px);
-    --btn-h: clamp(44px, 6.1vh, 58px);
-    --btn-h-primary: clamp(56px, 8.1vh, 74px);
+    --btn-h: clamp(44px, 5.7vh, 58px);
+    --btn-h-primary: clamp(56px, 7.8vh, 74px);
     --icon: clamp(28px, 4.4vh, 40px);
     --icon-primary: clamp(36px, 5.4vh, 44px);
     --arrow: clamp(22px, 3.5vh, 30px);
@@ -460,7 +460,7 @@ body {
 
 /* ---------- Entrada suave (atraso escalonado por classe) ---------- */
 .d0 { --i: 0; } .d1 { --i: 1; } .d2 { --i: 2; } .d3 { --i: 3; } .d4 { --i: 4; }
-.d5 { --i: 5; } .d6 { --i: 6; } .d7 { --i: 7; } .d8 { --i: 8; } .d9 { --i: 9; }
+.d5 { --i: 5; } .d6 { --i: 6; } .d7 { --i: 7; } .d8 { --i: 8; } .d9 { --i: 9; } .d10 { --i: 10; }
 .reveal {
   opacity: 0;
   animation: rise 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
@@ -493,6 +493,11 @@ body {
   }
 }
 
+/* Celular: a cidade já aparece no botão "Veja como chegar", então sai do rodapé */
+@media (max-width: 767px) {
+  .footer__loc { display: none; }
+}
+
 /* ---------- Tablet / desktop: botões um pouco maiores ---------- */
 @media (min-width: 768px) {
   :root {
@@ -518,32 +523,47 @@ body {
   .footer__loc { font-size: 12px; }
 }
 
-/* ---------- Telas baixas (iPhone SE, Android compacto): tudo encaixa sem rolar ---------- */
-@media (max-height: 700px) and (max-width: 767px) {
+/* ---------- Telas baixas (até 800px de altura): cabeçalho e rodapé compactos ---------- */
+@media (max-height: 800px) and (max-width: 767px) {
   .brand__title { font-size: 17px; max-width: none; }
   .brand__sub { font-size: 12px; }
   .footer { gap: 4px; }
   .footer__logo { width: 88px; }
-  .footer__loc { display: none; }
 }
 
-/* ---------- Telas bem baixas (360x640 e menores) ---------- */
+/* ---------- Telas bem baixas (até 700px, ex.: iPhone SE): só o título nos botões menores ---------- */
+@media (max-height: 700px) and (max-width: 767px) {
+  :root {
+    --strip-h: 38px;
+    --gap: 6px;
+    --btn-h: 40px;
+    --btn-h-primary: 58px;
+    --icon: 28px;
+    --icon-primary: 38px;
+    --arrow: 24px;
+    --arrow-primary: 28px;
+  }
+  .links li:not(:first-child) .btn__sub { display: none; }
+}
+
+/* ---------- Telas mínimas (360x640 e menores) ---------- */
 @media (max-height: 660px) and (max-width: 767px) {
   :root {
-    --strip-h: 36px;
+    --strip-h: 34px;
     --gap: 5px;
-    --btn-h: 44px;
-    --btn-h-primary: 56px;
-    --icon: 28px;
-    --icon-primary: 36px;
+    --btn-h: 36px;
+    --btn-h-primary: 54px;
+    --icon: 26px;
+    --icon-primary: 34px;
     --arrow: 22px;
     --arrow-primary: 26px;
   }
   .brand { margin-bottom: 8px; }
-  .brand__logo { width: min(50%, 190px); }
+  .brand__logo { width: min(48%, 180px); }
   .brand__title { font-size: 16px; }
   .brand__sub { font-size: 11.5px; }
   .footer { margin-top: 8px; padding-top: 6px; }
+  .footer__logo { display: none; }
 }
 @media (max-height: 600px) and (max-width: 767px) {
   .footer__logo { display: none; }

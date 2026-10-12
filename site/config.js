@@ -12,6 +12,9 @@ window.ARACA_CONFIG = {
     instagram: "https://www.instagram.com/aracabeach",
     maps:      "https://maps.app.goo.gl/NDseKxaBburnpdp39",
 
+    // FOTOS DA INAUGURAÇÃO — pasta do Google Drive (Dia 01 e Dia 02).
+    inauguracao: "https://drive.google.com/drive/folders/1VJwKc6IGA_eOLsAtH4EQSrhsivTo0pHw?usp=sharing",
+
     // CARDÁPIO DIGITAL — PDF do cardápio completo (Google Drive).
     // Se ficar vazio, o botão volta a aparecer desativado com a etiqueta "Em breve".
     cardapio:  "https://drive.google.com/file/d/1-i_QLi-HwoqO_i9vzPeqzrAEQHt6fiu7/view?usp=sharing",
