@@ -12,9 +12,9 @@ window.ARACA_CONFIG = {
     instagram: "https://www.instagram.com/aracabeach",
     maps:      "https://maps.app.goo.gl/NDseKxaBburnpdp39",
 
-    // CARDÁPIO DIGITAL — cole a URL aqui quando ela existir.
-    // Enquanto estiver vazio, o botão aparece desativado com a etiqueta "Em breve".
-    cardapio:  "",
+    // CARDÁPIO DIGITAL — PDF do cardápio completo (Google Drive).
+    // Se ficar vazio, o botão volta a aparecer desativado com a etiqueta "Em breve".
+    cardapio:  "https://drive.google.com/file/d/1-i_QLi-HwoqO_i9vzPeqzrAEQHt6fiu7/view?usp=sharing",
   },
 
   // Mensagens pré-preenchidas do WhatsApp
