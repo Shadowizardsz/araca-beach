@@ -7,6 +7,9 @@ window.ARACA_CONFIG = {
   // WhatsApp (DDD + número, só dígitos, sem +55)
   whatsapp: "98985014244",
 
+  // WhatsApp das inscrições do 1º Torneio de Vôlei (DDD + número, só dígitos)
+  whatsappTorneio: "98984899256",
+
   links: {
     avaliar:   "https://search.google.com/local/writereview?placeid=ChIJW9dKBvST9gcRs2yB8yFtxkw",
     instagram: "https://www.instagram.com/aracabeach",
@@ -25,5 +28,6 @@ window.ARACA_CONFIG = {
     agendar: "Olá! Gostaria de agendar um horário de quadra no Araça Beach.",
     equipe:  "Olá! Vim pelo Instagram e gostaria de falar com a equipe do Araça Beach.",
     matricula: "Olá! Gostaria de fazer minha matrícula no Araça Beach.",
+    torneio: "Olá! Quero inscrever minha dupla no 1º Torneio de Vôlei do Araça Beach (Misto intermediário).",
   },
 };

@@ -18,11 +18,11 @@
   --branco: #ffffff;
 
   /* Escala mobile, calculada pela altura útil da tela */
-  --strip-h: clamp(42px, 6dvh, 54px);
-  --gap: clamp(6px, 1.1dvh, 10px);
-  --btn-h: clamp(44px, 5.7dvh, 58px);
-  --btn-h-primary: clamp(56px, 7.8dvh, 74px);
-  --icon: clamp(28px, 4.4dvh, 40px);
+  --strip-h: clamp(36px, 5dvh, 54px);
+  --gap: clamp(5px, 0.85dvh, 10px);
+  --btn-h: clamp(42px, 5.1dvh, 58px);
+  --btn-h-primary: clamp(54px, 7.3dvh, 74px);
+  --icon: clamp(28px, 4.0dvh, 40px);
   --icon-primary: clamp(36px, 5.4dvh, 44px);
   --arrow: clamp(22px, 3.5dvh, 30px);
   --arrow-primary: clamp(26px, 4dvh, 32px);
@@ -37,11 +37,11 @@
 /* Navegadores sem dvh usam vh */
 @supports not (height: 100dvh) {
   :root {
-    --strip-h: clamp(42px, 6vh, 54px);
-    --gap: clamp(6px, 1.1vh, 10px);
-    --btn-h: clamp(44px, 5.7vh, 58px);
-    --btn-h-primary: clamp(56px, 7.8vh, 74px);
-    --icon: clamp(28px, 4.4vh, 40px);
+    --strip-h: clamp(36px, 5vh, 54px);
+    --gap: clamp(5px, 0.85vh, 10px);
+    --btn-h: clamp(42px, 5.1vh, 58px);
+    --btn-h-primary: clamp(54px, 7.3vh, 74px);
+    --icon: clamp(28px, 4.0vh, 40px);
     --icon-primary: clamp(36px, 5.4vh, 44px);
     --arrow: clamp(22px, 3.5vh, 30px);
     --arrow-primary: clamp(26px, 4vh, 32px);
@@ -460,7 +460,7 @@ body {
 
 /* ---------- Entrada suave (atraso escalonado por classe) ---------- */
 .d0 { --i: 0; } .d1 { --i: 1; } .d2 { --i: 2; } .d3 { --i: 3; } .d4 { --i: 4; }
-.d5 { --i: 5; } .d6 { --i: 6; } .d7 { --i: 7; } .d8 { --i: 8; } .d9 { --i: 9; } .d10 { --i: 10; }
+.d5 { --i: 5; } .d6 { --i: 6; } .d7 { --i: 7; } .d8 { --i: 8; } .d9 { --i: 9; } .d10 { --i: 10; } .d11 { --i: 11; }
 .reveal {
   opacity: 0;
   animation: rise 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
@@ -523,16 +523,16 @@ body {
   .footer__loc { font-size: 12px; }
 }
 
-/* ---------- Telas baixas (até 800px de altura): cabeçalho e rodapé compactos ---------- */
-@media (max-height: 800px) and (max-width: 767px) {
+/* ---------- Telas até 930px de altura: cabeçalho e rodapé compactos (9 botões numa tela só) ---------- */
+@media (max-height: 930px) and (max-width: 767px) {
   .brand__title { font-size: 17px; max-width: none; }
   .brand__sub { font-size: 12px; }
   .footer { gap: 4px; }
   .footer__logo { width: 88px; }
 }
 
-/* ---------- Telas bem baixas (até 700px, ex.: iPhone SE): só o título nos botões menores ---------- */
-@media (max-height: 700px) and (max-width: 767px) {
+/* ---------- Telas baixas (até 760px, ex.: iPhone SE e 8 Plus): só o título nos botões menores ---------- */
+@media (max-height: 760px) and (max-width: 767px) {
   :root {
     --strip-h: 38px;
     --gap: 6px;
@@ -546,8 +546,8 @@ body {
   .links li:not(:first-child) .btn__sub { display: none; }
 }
 
-/* ---------- Telas mínimas (360x640 e menores) ---------- */
-@media (max-height: 660px) and (max-width: 767px) {
+/* ---------- Telas mínimas (iPhone SE 375x667, 360x640 e menores) ---------- */
+@media (max-height: 700px) and (max-width: 767px) {
   :root {
     --strip-h: 34px;
     --gap: 5px;
@@ -568,6 +568,12 @@ body {
 @media (max-height: 600px) and (max-width: 767px) {
   .footer__logo { display: none; }
   .btn__sub { font-size: 10.5px; }
+}
+
+/* ---------- Celulares estreitos e não muito altos (ex.: 360x780/800): subtítulo um pouco menor ---------- */
+@media (max-width: 370px) and (max-height: 860px) {
+  :root { --s: 10.5px; --sp: 11px; }
+  .btn__sub { line-height: 1.2; }
 }
 
 /* ---------- Telas muito estreitas ---------- */

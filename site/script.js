@@ -17,14 +17,15 @@
   }
 
   // WhatsApp: só dígitos (DDD + número), limitado a 11 caracteres
-  function wa(text) {
-    var phone = String(cfg.whatsapp || "").replace(/\D/g, "").slice(0, 11);
+  function wa(text, number) {
+    var phone = String(number || cfg.whatsapp || "").replace(/\D/g, "").slice(0, 11);
     if (phone.length < 10) return "";
     return safeUrl("https://wa.me/55" + phone + "?text=" + encodeURIComponent(String(text || "").slice(0, 300)));
   }
 
   var urls = {
     avaliar: safeUrl(links.avaliar),
+    torneio: wa(msgs.torneio, cfg.whatsappTorneio),
     agendar: wa(msgs.agendar),
     matricula: wa(msgs.matricula),
     equipe: wa(msgs.equipe),
